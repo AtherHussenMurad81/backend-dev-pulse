@@ -60,5 +60,21 @@ class AuthService {
 
     return user as User;
   }
+  async getUserById(reporterId: string) {
+    const result = await pool.query(
+      `
+    SELECT id, name, email, role, created_at, updated_at
+    FROM users
+    WHERE id = $1
+    `,
+      [reporterId],
+    );
+
+    if (result.rowCount === 0) {
+      return null;
+    }
+
+    return result.rows[0] as RUser & { id: string };
+  }
 }
 export default new AuthService();
