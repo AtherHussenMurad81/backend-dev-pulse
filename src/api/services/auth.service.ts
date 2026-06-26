@@ -76,5 +76,40 @@ class AuthService {
 
     return result.rows[0] as RUser & { id: string };
   }
+
+  async getAllIssues(filters: {
+    sort?: string;
+    type?: string;
+    status?: string;
+  }) {
+    const values: unknown[] = [];
+    let query = `SELECT * FROM issues`;
+
+    const conditions: string[] = [];
+
+    if (filters.type) {
+      values.push(filters.type);
+      conditions.push(`type = $${values.length}`);
+    }
+
+    if (filters.status) {
+      values.push(filters.status);
+      conditions.push(`status = $${values.length}`);
+    }
+
+    if (conditions.length > 0) {
+      query += ` WHERE ` + conditions.join(" AND ");
+    }
+
+    if (filters.sort === "oldest") {
+      query += ` ORDER BY created_at ASC`;
+    } else {
+      query += ` ORDER BY created_at DESC`;
+    }
+
+    const result = await pool.query(query, values);
+
+    return result.rows;
+  }
 }
 export default new AuthService();

@@ -7,9 +7,9 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.get("/", (req, res) => {
-  res.send(" onek pera diso miya tmi");
-});
+// app.get("/", (req, res) => {
+//   res.send(" onek pera diso miya tmi");
+// });
 
 app.use("/api/auth", authRoute);
 app.use("/api", issueRoute);
