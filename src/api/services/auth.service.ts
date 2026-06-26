@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import type { RUser } from "../../types";
+import type { RUser, User } from "../../types";
 import { pool } from "../../db";
 
 class AuthService {
@@ -33,6 +33,32 @@ class AuthService {
     delete result.rows[0].password;
 
     return result;
+  }
+  async validateUser(email: string, password: string) {
+    const result = await pool.query(
+      `
+    SELECT id, name,email, password, role, created_at, updated_at
+    FROM users
+    WHERE email = $1
+    `,
+      [email],
+    );
+
+    if (result.rowCount === 0) {
+      return null;
+    }
+
+    const user = result.rows[0];
+    // console.log(user);
+    const isMatched = await this.comparePassword(password, user.password);
+
+    if (!isMatched) {
+      return null;
+    }
+
+    delete user.password;
+
+    return user as User;
   }
 }
 export default new AuthService();
