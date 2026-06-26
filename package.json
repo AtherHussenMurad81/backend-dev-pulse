@@ -1,5 +1,5 @@
 {
-  "name": "dev-palse",
+  "name": "dev-pulse",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
-    "@types/node": "^26.0.1"
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.0.1",
+    "@types/pg": "^8.20.0"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.22.0",
     "tsx": "^4.22.4"
   }
